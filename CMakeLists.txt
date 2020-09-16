@@ -33,4 +33,4 @@ if (GRAPHTHEWY_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
 
-install(FILES src/include/UndirectedGraph.hpp src/include/UndirectedGraphCycle.hpp DESTINATION include/graphthewy)
+install(FILES src/include/GraphthewyModel.hpp src/include/GraphthewyCycle.hpp DESTINATION include/graphthewy)
