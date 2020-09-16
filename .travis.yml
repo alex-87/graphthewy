@@ -9,10 +9,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - ppa:snaipewastaken/ppa
           packages:
             - cmake
             - gcc-10
             - g++-10
+            - criterion-dev
       env: COMPILER=g++-10
     - compiler: clang
       addons:
@@ -20,9 +22,11 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-10
+            - ppa:snaipewastaken/ppa
           packages:
             - cmake
             - clang-10
+            - criterion-dev
       env: COMPILER=clang++-10
 
 branches:
