@@ -1,7 +1,7 @@
 About
 =====
 
-Graphthewy is a header-only C++ Library to use for :
+Graphthewy is a header-only C++17 Library to use for :
   - Graph (directed or not) modelling
   - Graph cycle detection
 
@@ -9,6 +9,7 @@ Requirement
 -----------
 
 This software requires :
+  - C++17
   - [CMake](https://github.com/Kitware/CMake)
   - [Criterion](https://github.com/Snaipe/Criterion) *for building tests*
 

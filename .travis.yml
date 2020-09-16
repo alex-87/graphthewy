@@ -1,0 +1,41 @@
+language: cpp
+sudo: false
+
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - george-edison55-precise-backports
+          packages:
+            - cmake
+            - cmake-data
+            - gcc-10
+            - g++-10
+      env: COMPILER=g++-10
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - kubuntu-backports
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-10
+          packages:
+            - cmake
+            - clang-10
+      env: COMPILER=clang++-10
+
+branches:
+    only:
+        - master
+
+before_script:
+  - export CC=$COMPILER
+  - export CXX=$COMPILER
+
+script:
+  - cmake CMakeLists.txt -DGRAPHTHEWY_BUILD_TESTS=ON
+  - make
+  - ctest -C Debug
