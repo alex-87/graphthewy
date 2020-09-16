@@ -13,7 +13,6 @@ matrix:
             - cmake
             - gcc-10
             - g++-10
-            - criterion
             - wget
       env: COMPILER=g++-10
     - compiler: clang
@@ -25,7 +24,6 @@ matrix:
           packages:
             - cmake
             - clang-10
-            - criterion
             - wget
       env: COMPILER=clang++-10
 
