@@ -1,6 +1,6 @@
 language: cpp
 dist: bionic
-sudo: false
+sudo: true
 
 matrix:
   include:
@@ -9,12 +9,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - snaipewastaken/ppa
           packages:
             - cmake
             - gcc-10
             - g++-10
-            - criterion-dev
+            - criterion
+            - wget
       env: COMPILER=g++-10
     - compiler: clang
       addons:
@@ -22,11 +22,11 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-10
-            - snaipewastaken/ppa
           packages:
             - cmake
             - clang-10
-            - criterion-dev
+            - criterion
+            - wget
       env: COMPILER=clang++-10
 
 branches:
@@ -36,6 +36,8 @@ branches:
 before_script:
   - export CC=$COMPILER
   - export CXX=$COMPILER
+  - wget ttps://github.com/Snaipe/Criterion/releases/download/v2.3.3/criterion-v2.3.3.tar.bz2 && tar xaf criterion-v2.3.3.tar.bz2 && cd criterion-v2.3.3.tar.bz2 && cmake CMakeLists && make && sudo make install && ldconfig
+
 
 script:
   - cmake CMakeLists.txt -DGRAPHTHEWY_BUILD_TESTS=ON
