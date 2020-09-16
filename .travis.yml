@@ -14,7 +14,9 @@ matrix:
             - gcc-10
             - g++-10
             - wget
-      env: COMPILER=g++-10
+      env:
+        - COMPILER=g++-10
+        - CC_COMPILER=gcc-10
     - compiler: clang
       addons:
         apt:
@@ -25,14 +27,16 @@ matrix:
             - cmake
             - clang-10
             - wget
-      env: COMPILER=clang++-10
+      env:
+        - COMPILER=clang++-10
+        - CC_COMPILER=clang-10
 
 branches:
     only:
         - master
 
 before_script:
-  - export CC=$COMPILER
+  - export CC=$CC_COMPILER
   - export CXX=$COMPILER
   - wget https://github.com/Snaipe/Criterion/releases/download/v2.3.3/criterion-v2.3.3.tar.bz2 && tar xaf criterion-v2.3.3.tar.bz2 && cd criterion-v2.3.3 && cmake CMakeLists.txt && make && sudo make install && ldconfig
 
