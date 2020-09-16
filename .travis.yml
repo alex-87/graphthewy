@@ -9,7 +9,7 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - ppa:snaipewastaken/ppa
+            - snaipewastaken/ppa
           packages:
             - cmake
             - gcc-10
@@ -22,7 +22,7 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-10
-            - ppa:snaipewastaken/ppa
+            - snaipewastaken/ppa
           packages:
             - cmake
             - clang-10
