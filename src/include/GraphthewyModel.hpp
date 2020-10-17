@@ -64,6 +64,14 @@ struct Vertex {
     bool operator==(const std::shared_ptr<Vertex<T>>& o) const { return o->label_==label_; }
 
     /**
+     * Operator
+     * 
+     * @param o The pointed vertex to compare
+     * @return true if the pointed vertexes' labels are equals
+     */
+    bool operator==(const std::weak_ptr<Vertex<T>>& o) const { return o->label_==label_; }
+
+    /**
      * To check whether the label represents an existing vertex in the
      * linking list of the current vertex.
      * 
@@ -72,7 +80,7 @@ struct Vertex {
      */
     bool contains(const T& label) const {
         for(const auto& e : linkVectorPtr_) {
-            if(e->label_ == label) {
+            if(e.lock()->label_ == label) {
                 return true;
             }
         }
@@ -131,7 +139,7 @@ struct Vertex {
      * List of linked vertexes. The degree of the current vertex is
      * the size of the vector.
      */
-    std::vector<std::shared_ptr<Vertex<T>>> linkVectorPtr_;
+    std::vector<std::weak_ptr<Vertex<T>>> linkVectorPtr_;
 
 };
 
@@ -166,8 +174,8 @@ public:
         }
         for(const auto& q : g.vertexPtrMap_) {
             for(const auto& p : q.second->linkVectorPtr_) {
-                if(g.isLinked(p->label_, q.first)) {
-                    link(p->label_, q.first);
+                if(g.isLinked(p.lock()->label_, q.first)) {
+                    link(p.lock()->label_, q.first);
                 }
             }
         }
@@ -333,8 +341,8 @@ public:
         }
         for(const auto& q : g.vertexPtrMap_) {
             for(const auto& p : q.second->linkVectorPtr_) {
-                if(g.isLinked(q.first, p->label_)) {
-                    link(q.first, p->label_);
+                if(g.isLinked(q.first, p.lock()->label_)) {
+                    link(q.first, p.lock()->label_);
                 }
             }
         }

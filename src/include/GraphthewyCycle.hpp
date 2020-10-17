@@ -68,11 +68,11 @@ protected:
         const std::shared_ptr<Vertex<T>>& previous) const {
         visited.push_back(vertex->label_);
         for(const auto& v : vertex->linkVectorPtr_) {
-            if(v!=previous) {
-                if(std::find_if(visited.begin(), visited.end(), [&](const auto& x) {return v->label_==x;})!=visited.end() ) {
+            if(v.lock()!=previous) {
+                if(std::find_if(visited.begin(), visited.end(), [&](const auto& x) {return v.lock()->label_==x;})!=visited.end() ) {
                     return true;
                 }
-                if(deepfirstseach(v, visited, vertex)) {
+                if(deepfirstseach(v.lock(), visited, vertex)) {
                     return true;
                 }
             }
@@ -104,7 +104,7 @@ protected:
      * @return true if cycle is detected, false otherwise.
      */
     bool hasCycleDirected() const {
-        std::map<T, std::vector<std::shared_ptr<Vertex<T>>>> currentMap, newMap;
+        std::map<T, std::vector<std::weak_ptr<Vertex<T>>>> currentMap, newMap;
         for(const auto& e : graph_.vertexPtrMap_) {
             currentMap.insert( std::pair(e.first, e.second->linkVectorPtr_));
         }
@@ -114,9 +114,9 @@ protected:
             sum_r = 0;
             newMap.clear();
             for(const auto& e : currentMap) {
-                std::vector<std::shared_ptr<Vertex<T>>> u;
+                std::vector<std::weak_ptr<Vertex<T>>> u;
                 for(const auto& s : e.second) {
-                    for(const auto& h : currentMap[s->label_]) {
+                    for(const auto& h : currentMap[s.lock()->label_]) {
                         u.push_back( h );
                     }
                 }
@@ -170,6 +170,22 @@ protected:
     }
 
     /**
+     * To check whether the specified element's label is contained in the vector.
+     * 
+     * @param l the vector of elements
+     * @param e the element's label
+     * @return true or false
+     */
+    bool contains(const std::vector<std::weak_ptr<Vertex<T>>>& l, const T& e) const {
+        for(const auto& v : l) {
+            if(v.lock()->label_==e) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * To check whether the specified element label is contained in the vector.
      * 
      * @param l the vector of elements
@@ -177,6 +193,17 @@ protected:
      * @return true or false
      */
     bool contains(const std::vector<std::shared_ptr<Vertex<T>>>& l, const std::shared_ptr<Vertex<T>>& e) const {
+        return contains(l, e->label_);
+    }
+
+    /**
+     * To check whether the specified element label is contained in the vector.
+     * 
+     * @param l the vector of elements
+     * @param e the element
+     * @return true or false
+     */
+    bool contains(const std::vector<std::weak_ptr<Vertex<T>>>& l, const std::shared_ptr<Vertex<T>>& e) const {
         return contains(l, e->label_);
     }
 
