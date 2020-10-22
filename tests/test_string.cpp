@@ -42,9 +42,9 @@ Test(Test_UnDirected_String, link) {
 Test(Test_UnDirected_String, equals) {
 
     GRAPH_CREATE(g)
-    g.addVertex("1");
-    g.addVertex("2");
-    g.addVertex("3");
+    g << "1";
+    g << "2";
+    g << "3";
     g.link("1", "2");
     g.link("2", "3");
     g.link("3", "1");
@@ -94,6 +94,7 @@ Test(Test_UnDirected_String, no_cycle) {
 
     GRAPH_CYCLE(gc, g)
     cr_assert(gc.hasCycle() == false);
+    cr_assert(g.getEdgePairList().size() == 6);
 }
 
 

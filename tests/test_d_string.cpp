@@ -36,15 +36,14 @@ Test(Test_Directed_String, link) {
     g.link("1", "2");
     cr_assert(g.isLinked("1", "2") == true);
     cr_assert(g.isLinked("2", "1") == false);
+    cr_assert(g.getEdgePairList().size() == 1);
 }
 
 
 Test(Test_Directed_String, equals) {
 
     GRAPH_CREATE(g)
-    g.addVertex("1");
-    g.addVertex("2");
-    g.addVertex("3");
+    g << "1" << "2" << "3";
     g.link("1", "2");
     g.link("2", "3");
     g.link("3", "1");
@@ -69,10 +68,7 @@ Test(Test_Directed_String, equals) {
 
 Test(Test_Directed_String, cycle) {
 
-    GRAPH_CREATE(g)
-    g.addVertex("1");
-    g.addVertex("2");
-    g.addVertex("3");
+    graphthewy::DirectedGraph<GRAPH_TEMPTYPE> g{"1", "2", "3"};
     g.link("1", "2");
     g.link("2", "3");
     g.link("3", "1");

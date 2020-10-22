@@ -17,7 +17,6 @@
 #include <algorithm>
 #include <vector>
 #include <map>
-#include <iostream>
 
 
 
@@ -293,6 +292,75 @@ public:
         return isLinked(e1->label_, e2->label_);
     }
 
+    /**
+     * Get edge list (list of label pairs). In case of undirected graph,
+     * there will be two edge per linked vertex ((a, b), (b, a))
+     * 
+     * @return vector of pairs of label corresponding to edge
+     */
+    std::vector<std::pair<T, T>> getEdgePairList() const {
+        std::vector<std::pair<T, T>> edgePairList;
+        for(const auto& e : vertexPtrMap_) {
+            for(const auto& h : e.second->linkVectorPtr_) {
+                edgePairList.push_back( std::make_pair(e.second->label_, h.lock()->label_) );
+            }
+        }
+        return edgePairList;
+    }
+
+
+public:
+
+    /**
+     * Operator <<
+     * 
+     * To add a vertex if not exists. if exists, noop.
+     * 
+     * @param e vertex label
+     * @return graph instance
+     */
+    UndirectedGraph<T>& operator <<(const T& e) {
+        if( !contains(e) ) {
+            addVertex(e);
+        }
+        return *this;
+    }
+
+    /**
+     * Operator <<
+     * 
+     * To add a vertex if not exists. if exists, noop.
+     * 
+     * @param e vertex
+     * @return graph instance
+     */
+    UndirectedGraph<T>& operator <<(const Vertex<T>& e) {
+        if( !contains(e) ) {
+            addVertex(e);
+        }
+        return *this;
+    }
+
+
+public:
+
+    /**
+     * Order of the graph (number of vertices)
+     * 
+     * @return the order of the graph
+     */
+    std::size_t order() const
+    { return vertexPtrMap_.size(); }
+
+    /**
+     * Size of the graph (number of edges)
+     * 
+     * @return the number of edges
+     */
+    std::size_t size() const {
+        return getEdgePairList().size() / 2;
+    }
+
 
 public:
 
@@ -318,6 +386,7 @@ public:
 
     using UndirectedGraph<T>::vertexPtrMap_;
     using UndirectedGraph<T>::contains;
+    using UndirectedGraph<T>::getEdgePairList;
 
 
 public:
@@ -390,6 +459,15 @@ public:
             return true;
         }
         return false;
+    }
+
+    /**
+     * Size of the graph (number of edges)
+     * 
+     * @return the number of edges
+     */
+    std::size_t size() const {
+        return getEdgePairList().size();
     }
 
 };
