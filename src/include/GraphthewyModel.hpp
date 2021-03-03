@@ -17,10 +17,17 @@
 #include <algorithm>
 #include <vector>
 #include <map>
-#include <concepts>
 
 
 namespace graphthewy {
+
+template<typename Tp>
+concept equality_comparable = requires(const Tp& t, const Tp& u) {
+    { t == u };
+    { t != u };
+    { u == t };
+    { u != t };
+};
 
 /**
  * Vertex
@@ -28,7 +35,7 @@ namespace graphthewy {
  * Template argument:
  * - T the type of label
  */
-template<std::equality_comparable T>
+template<equality_comparable T>
 struct Vertex {
 
     /**
@@ -149,7 +156,7 @@ struct Vertex {
  * Template argument:
  * - T = the type of the vertex's label
  */
-template<std::equality_comparable T>
+template<equality_comparable T>
 class UndirectedGraph {
 
 public:
@@ -379,7 +386,7 @@ public:
  * Template argument:
  * - T = the type of the vertex's label
  */
-template<std::equality_comparable T>
+template<equality_comparable T>
 class DirectedGraph : public UndirectedGraph<T> {
 
 public:

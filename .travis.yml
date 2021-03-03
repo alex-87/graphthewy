@@ -23,15 +23,15 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-11
+            - llvm-toolchain-precise-10
           packages:
             - cmake
-            - clang-11
+            - clang-10
             - wget
             - cpputest
       env:
-        - COMPILER=clang++-11
-        - CC_COMPILER=clang-11
+        - COMPILER=clang++-10
+        - CC_COMPILER=clang-10
 
 branches:
     only:
