@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Alexis LE GOADEC.
+ * Copyright (C) 2020, 2021 Alexis LE GOADEC.
  * 
  * This file is part of the Graphthewy project which is licensed under
  * the European Union Public License v1.2.
@@ -12,7 +12,10 @@
 #include "../src/include/GraphthewyCycle.hpp"
 
 #include <string>
-#include <criterion/criterion.h>
+#include <CppUTest/TestHarness.h>
+#include <CppUTest/CommandLineTestRunner.h>
+
+TEST_GROUP(Test_UnDirected_ULLINT) { };
 
 /*************************************
  * Macro for graph instance
@@ -23,31 +26,31 @@
 /*************************************/
 
 
-Test(Test_UnDirected_ULLINT, create) {
+TEST(Test_UnDirected_ULLINT, create) {
     GRAPH_CREATE(g)
     g.addVertex(1);
-    cr_assert(g.getVertex(1) == 1);
+    CHECK_TRUE(g.getVertex(1) == 1);
 }
 
-Test(Test_UnDirected_ULLINT, create_heavy) {
+TEST(Test_UnDirected_ULLINT, create_heavy) {
     GRAPH_CREATE(g)
     const int limit_node_cr = 10000;
     for(int i=0; i<limit_node_cr; i++) {
         g.addVertex(i);
     };
-    cr_assert(g.getVertex(limit_node_cr - 1) == limit_node_cr - 1);
+    CHECK_TRUE(g.getVertex(limit_node_cr - 1) == limit_node_cr - 1);
 }
 
-Test(Test_UnDirected_ULLINT, link) {
+TEST(Test_UnDirected_ULLINT, link) {
     GRAPH_CREATE(g)
     g.addVertex(1);
     g.addVertex(2);
     g.link(1, 2);
-    cr_assert(g.isLinked(1, 2) == true);
-    cr_assert(g.isLinked(2, 1) == true);
+    CHECK_TRUE(g.isLinked(1, 2) == true);
+    CHECK_TRUE(g.isLinked(2, 1) == true);
 }
 
-Test(Test_UnDirected_ULLINT, link_heavy) {
+TEST(Test_UnDirected_ULLINT, link_heavy) {
     GRAPH_CREATE(g)
     const int limit_node_cr = 10000;
     for(int i=0; i<limit_node_cr; i++) {
@@ -56,12 +59,12 @@ Test(Test_UnDirected_ULLINT, link_heavy) {
     for(int i=1; i<limit_node_cr; i++) {
         g.link(i-1, i);
     }
-    cr_assert(g.isLinked(1234, 1235) == true);
-    cr_assert(g.isLinked(1235, 1234) == true);
-    cr_assert(g.isLinked(1234, 1234) == false);
+    CHECK_TRUE(g.isLinked(1234, 1235) == true);
+    CHECK_TRUE(g.isLinked(1235, 1234) == true);
+    CHECK_TRUE(g.isLinked(1234, 1234) == false);
 }
 
-Test(Test_UnDirected_ULLINT, equals) {
+TEST(Test_UnDirected_ULLINT, equals) {
 
     GRAPH_CREATE(g)
     g.addVertex(1);
@@ -79,17 +82,17 @@ Test(Test_UnDirected_ULLINT, equals) {
     h.link(2, 3);
     h.link(3, 1);
 
-    cr_assert(g.getVertex(1) == h.getVertex(1));
-    cr_assert(g.getVertex(2) == h.getVertex(2));
-    cr_assert(g.getVertex(3) == h.getVertex(3));
+    CHECK_TRUE(g.getVertex(1) == h.getVertex(1));
+    CHECK_TRUE(g.getVertex(2) == h.getVertex(2));
+    CHECK_TRUE(g.getVertex(3) == h.getVertex(3));
 
-    cr_assert(g.isLinked(1, 2) == h.isLinked(1, 2));
-    cr_assert(g.isLinked(2, 3) == h.isLinked(2, 3));
-    cr_assert(g.isLinked(3, 1) == h.isLinked(3, 1));
+    CHECK_TRUE(g.isLinked(1, 2) == h.isLinked(1, 2));
+    CHECK_TRUE(g.isLinked(2, 3) == h.isLinked(2, 3));
+    CHECK_TRUE(g.isLinked(3, 1) == h.isLinked(3, 1));
 
 }
 
-Test(Test_UnDirected_ULLINT, cycle) {
+TEST(Test_UnDirected_ULLINT, cycle) {
 
     GRAPH_CREATE(g)
     g.addVertex(1);
@@ -100,10 +103,10 @@ Test(Test_UnDirected_ULLINT, cycle) {
     g.link(3, 1);
 
     GRAPH_CYCLE(gc, g)
-    cr_assert(gc.hasCycle() == true);
+    CHECK_TRUE(gc.hasCycle() == true);
 }
 
-Test(Test_UnDirected_ULLINT, no_cycle) {
+TEST(Test_UnDirected_ULLINT, no_cycle) {
 
     GRAPH_CREATE(g)
     g.addVertex(1);
@@ -113,17 +116,17 @@ Test(Test_UnDirected_ULLINT, no_cycle) {
     g.link(2, 3);
 
     GRAPH_CYCLE(gc, g)
-    cr_assert(gc.hasCycle() == false);
+    CHECK_TRUE(gc.hasCycle() == false);
 }
 
 
-Test(Test_UnDirected_ULLINT, NoDuplicates) {
+TEST(Test_UnDirected_ULLINT, NoDuplicates) {
     GRAPH_CREATE(g)
     g.addVertex(1);
-    cr_assert(g.getVertex(1)==1);
+    CHECK_TRUE(g.getVertex(1)==1);
 }
 
-Test(Test_UnDirected_ULLINT, graphCopy) {
+TEST(Test_UnDirected_ULLINT, graphCopy) {
     GRAPH_CREATE(g)
     for(int i=0; i<5; i++) {
         g.addVertex(i);
@@ -132,5 +135,11 @@ Test(Test_UnDirected_ULLINT, graphCopy) {
 
     decltype(g) h(g);
 
-    cr_assert(g.getVertex(4)==h.getVertex(4));
+    CHECK_TRUE(g.getVertex(4)==h.getVertex(4));
+}
+
+
+int main(int argc, char** arvg)
+{
+   return CommandLineTestRunner::RunAllTests(argc, arvg);
 }

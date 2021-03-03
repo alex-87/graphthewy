@@ -1,4 +1,4 @@
-## Copyright (C) 2020 Alexis LE GOADEC.
+## Copyright (C) 2020, 2021 Alexis LE GOADEC.
 
 ## This file is part of the Graphthewy project which is licensed under
 ## the European Union Public License v1.2.
@@ -17,14 +17,14 @@ add_executable(test_d_char test_d_char.cpp)
 add_executable(test_d_string test_d_string.cpp)
 add_executable(test_d_ullint test_d_ullint.cpp)
 
-target_link_libraries(test_int criterion)
-target_link_libraries(test_char criterion)
-target_link_libraries(test_string criterion)
-target_link_libraries(test_ullint criterion)
-target_link_libraries(test_d_int criterion)
-target_link_libraries(test_d_char criterion)
-target_link_libraries(test_d_string criterion)
-target_link_libraries(test_d_ullint criterion)
+target_link_libraries(test_int CppUTest CppUTestExt)
+target_link_libraries(test_char CppUTest CppUTestExt)
+target_link_libraries(test_string CppUTest CppUTestExt)
+target_link_libraries(test_ullint CppUTest CppUTestExt)
+target_link_libraries(test_d_int CppUTest CppUTestExt)
+target_link_libraries(test_d_char CppUTest CppUTestExt)
+target_link_libraries(test_d_string CppUTest CppUTestExt)
+target_link_libraries(test_d_ullint CppUTest CppUTestExt)
 
 add_test(NAME "test_int" COMMAND test_int)
 add_test(NAME "test_char" COMMAND test_char)

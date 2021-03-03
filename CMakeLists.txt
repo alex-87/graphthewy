@@ -1,4 +1,4 @@
-## Copyright (C) 2020 Alexis LE GOADEC.
+## Copyright (C) 2020, 2021 Alexis LE GOADEC.
 
 ## This file is part of the Graphthewy project which is licensed under
 ## the European Union Public License v1.2.
@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(graphthewy VERSION 1.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_C_FLAGS "-Og")
@@ -23,13 +23,8 @@ option(CMAKE_BUILD_TYPE "Debuging configuration for tests" Debug)
 option(GRAPHTHEWY_BUILD_TESTS "Whether or not to build the tests" ON)
 
 if (GRAPHTHEWY_BUILD_TESTS)
-    find_package(Criterion)
     include(CTest)
     enable_testing()
-    if(CRITERION_FOUND)
-        include_directories(${CRITERION_INCLUDE_DIRS})
-        target_link_libraries(${CRITERION_LIBRARIES})
-    endif()
     add_subdirectory(tests)
 endif()
 

@@ -3,7 +3,7 @@ About
 
 [![Build Status](https://travis-ci.org/alex-87/graphthewy.svg?branch=master)](https://travis-ci.org/alex-87/graphthewy)
 
-Graphthewy is a header-only C++17 Library to use for :
+Graphthewy is a header-only C++20 Library to use for :
   - Graph (directed or not) modelling
   - Graph cycle detection
 
@@ -11,9 +11,9 @@ Requirement
 -----------
 
 This software requires :
-  - C++17
+  - G++ or Clang++ supporting C++20
   - [CMake](https://github.com/Kitware/CMake)
-  - [Criterion](https://github.com/Snaipe/Criterion) *for building tests*
+  - [CppUTest](https://cpputest.github.io/) *for building tests*
 
 
 Installation
@@ -27,7 +27,7 @@ make
 sudo make install
 ```
 
-*Feel free to build tests with `-DGRAPHTHEWY_BUILD_TESTS=ON` after installing [Criterion](https://github.com/Snaipe/Criterion)*
+*Feel free to build tests with `-DGRAPHTHEWY_BUILD_TESTS=ON` after installing [CppUTest](https://cpputest.github.io/)*
 
 
 Quick start

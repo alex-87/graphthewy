@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Alexis LE GOADEC.
+ * Copyright (C) 2020, 2021 Alexis LE GOADEC.
  * 
  * This file is part of the Graphthewy project which is licensed under
  * the European Union Public License v1.2.
@@ -12,7 +12,10 @@
 #include "../src/include/GraphthewyCycle.hpp"
 
 #include <string>
-#include <criterion/criterion.h>
+#include <CppUTest/TestHarness.h>
+#include <CppUTest/CommandLineTestRunner.h>
+
+TEST_GROUP(Test_Directed_String) { };
 
 /*************************************
  * Macro for graph instance
@@ -23,24 +26,24 @@
 /*************************************/
 
 
-Test(Test_Directed_String, create) {
+TEST(Test_Directed_String, create) {
     GRAPH_CREATE(g)
     g.addVertex("a");
-    cr_assert(g.getVertex("a") == "a");
+    CHECK_TRUE(g.getVertex("a") == "a");
 }
 
-Test(Test_Directed_String, link) {
+TEST(Test_Directed_String, link) {
     GRAPH_CREATE(g)
     g.addVertex("1");
     g.addVertex("2");
     g.link("1", "2");
-    cr_assert(g.isLinked("1", "2") == true);
-    cr_assert(g.isLinked("2", "1") == false);
-    cr_assert(g.getEdgePairList().size() == 1);
+    CHECK_TRUE(g.isLinked("1", "2") == true);
+    CHECK_TRUE(g.isLinked("2", "1") == false);
+    CHECK_TRUE(g.getEdgePairList().size() == 1);
 }
 
 
-Test(Test_Directed_String, equals) {
+TEST(Test_Directed_String, equals) {
 
     GRAPH_CREATE(g)
     g << "1" << "2" << "3";
@@ -56,17 +59,17 @@ Test(Test_Directed_String, equals) {
     h.link("2", "3");
     h.link("3", "1");
 
-    cr_assert(g.getVertex("1") == h.getVertex("1"));
-    cr_assert(g.getVertex("2") == h.getVertex("2"));
-    cr_assert(g.getVertex("3") == h.getVertex("3"));
+    CHECK_TRUE(g.getVertex("1") == h.getVertex("1"));
+    CHECK_TRUE(g.getVertex("2") == h.getVertex("2"));
+    CHECK_TRUE(g.getVertex("3") == h.getVertex("3"));
 
-    cr_assert(g.isLinked("1", "2") == h.isLinked("1", "2"));
-    cr_assert(g.isLinked("2", "3") == h.isLinked("2", "3"));
-    cr_assert(g.isLinked("3", "1") == h.isLinked("3", "1"));
+    CHECK_TRUE(g.isLinked("1", "2") == h.isLinked("1", "2"));
+    CHECK_TRUE(g.isLinked("2", "3") == h.isLinked("2", "3"));
+    CHECK_TRUE(g.isLinked("3", "1") == h.isLinked("3", "1"));
 
 }
 
-Test(Test_Directed_String, cycle) {
+TEST(Test_Directed_String, cycle) {
 
     graphthewy::DirectedGraph<GRAPH_TEMPTYPE> g{"1", "2", "3"};
     g.link("1", "2");
@@ -74,10 +77,10 @@ Test(Test_Directed_String, cycle) {
     g.link("3", "1");
 
     GRAPH_CYCLE(gc, g)
-    cr_assert(gc.hasCycle() == true);
+    CHECK_TRUE(gc.hasCycle() == true);
 }
 
-Test(Test_Directed_String, no_cycle) {
+TEST(Test_Directed_String, no_cycle) {
 
     GRAPH_CREATE(g)
     g.addVertex("1");
@@ -87,17 +90,17 @@ Test(Test_Directed_String, no_cycle) {
     g.link("2", "3");
 
     GRAPH_CYCLE(gc, g)
-    cr_assert(gc.hasCycle() == false);
+    CHECK_TRUE(gc.hasCycle() == false);
 }
 
 
-Test(Test_Directed_String, NoDuplicates) {
+TEST(Test_Directed_String, NoDuplicates) {
     GRAPH_CREATE(g)
     g.addVertex("1");
-    cr_assert(g.getVertex("1")=="1");
+    CHECK_TRUE(g.getVertex("1")=="1");
 }
 
-Test(Test_Directed_String, graphCopy) {
+TEST(Test_Directed_String, graphCopy) {
     GRAPH_CREATE(g)
     g.addVertex("1");
     g.addVertex("2");
@@ -106,6 +109,12 @@ Test(Test_Directed_String, graphCopy) {
 
     decltype(g) h(g);
 
-    cr_assert(g.getVertex("3")==h.getVertex("3"));
-    cr_assert(g.isLinked("1", "2")==h.isLinked("1", "2"));
+    CHECK_TRUE(g.getVertex("3")==h.getVertex("3"));
+    CHECK_TRUE(g.isLinked("1", "2")==h.isLinked("1", "2"));
+}
+
+
+int main(int argc, char** arvg)
+{
+   return CommandLineTestRunner::RunAllTests(argc, arvg);
 }

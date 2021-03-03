@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Alexis LE GOADEC.
+ * Copyright (C) 2020, 2021 Alexis LE GOADEC.
  * 
  * This file is part of the Graphthewy project which is licensed under
  * the European Union Public License v1.2.
@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <vector>
 #include <map>
-
+#include <concepts>
 
 
 namespace graphthewy {
@@ -28,7 +28,7 @@ namespace graphthewy {
  * Template argument:
  * - T the type of label
  */
-template<class T>
+template<std::equality_comparable T>
 struct Vertex {
 
     /**
@@ -149,7 +149,7 @@ struct Vertex {
  * Template argument:
  * - T = the type of the vertex's label
  */
-template<class T>
+template<std::equality_comparable T>
 class UndirectedGraph {
 
 public:
@@ -379,7 +379,7 @@ public:
  * Template argument:
  * - T = the type of the vertex's label
  */
-template<class T>
+template<std::equality_comparable T>
 class DirectedGraph : public UndirectedGraph<T> {
 
 public:
