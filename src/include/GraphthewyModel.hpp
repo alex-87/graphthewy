@@ -21,6 +21,19 @@
 
 namespace graphthewy {
 
+#if __cplusplus < 202002L
+
+#define equality_comparable class
+
+template<class, class = void>
+struct EqualityComparable
+    : std::false_type {};
+
+template<class T>
+struct EqualityComparable<T, std::void_t<decltype(std::declval<T&>() == std::declval<T&>())>>
+    : std::true_type {};
+
+#else
 template<typename Tp>
 concept equality_comparable = requires(const Tp& t, const Tp& u) {
     { t == u };
@@ -28,6 +41,7 @@ concept equality_comparable = requires(const Tp& t, const Tp& u) {
     { u == t };
     { u != t };
 };
+#endif
 
 /**
  * Vertex
@@ -38,6 +52,22 @@ concept equality_comparable = requires(const Tp& t, const Tp& u) {
 template<equality_comparable T>
 struct Vertex {
 
+#if __cplusplus < 202002L
+
+    /**
+     * Constructor
+     * 
+     * @param label The vertex's label
+     */
+    Vertex(const T& label) : label_(label) {
+        static_assert(
+            EqualityComparable<T>::value,
+            "Type must be comparable."
+        );
+    };
+
+#else
+
     /**
      * Constructor
      * 
@@ -45,6 +75,7 @@ struct Vertex {
      */
     Vertex(const T& label) : label_(label) { };
 
+#endif
     /**
      * Operator
      * 
