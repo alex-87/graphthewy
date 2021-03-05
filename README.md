@@ -1,3 +1,6 @@
+![Graphthewy - Open source header-only graph modelling](https://zupimages.net/up/21/09/ygbc.png "Graphthewy - Open source header-only graph modelling")
+
+
 About
 =====
 
@@ -6,6 +9,11 @@ About
 Graphthewy is a header-only C++20 Library to use for :
   - Graph (directed or not) modelling
   - Graph cycle detection
+
+Documentation
+-------------
+
+You may find user documentation [in the `docs` directory](https://github.com/alex-87/graphthewy/tree/master/docs)
 
 Requirement
 -----------
