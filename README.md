@@ -24,8 +24,8 @@ This software requires :
   - [CppUTest](https://cpputest.github.io/) *for building tests*
 
 
-Installation
-------------
+Installation from source
+------------------------
 
 From the project basedir, in a terminal :
 
@@ -36,6 +36,16 @@ sudo make install
 ```
 
 *Feel free to build tests with `-DGRAPHTHEWY_BUILD_TESTS=ON` after installing [CppUTest](https://cpputest.github.io/)*
+
+
+Using with Conan
+----------------
+
+In your project's `conanfile.txt`, append your `[requires]` section with :
+
+```
+graphthewy/1.1@
+```
 
 
 Quick start
@@ -50,6 +60,9 @@ Create an **undirected** graph with a `int`-type label :
 ...
 
 graphthewy::UndirectedGraph<int> g{1, 2, 3};
+g.addVertex(4); // Add vertex in another way
+g << 5; // Add vertex using '<<' operator
+g << 6 << 7; // The graph contains vertex {1, 2, 3, 4, 5, 6, 7}
 g.link(1, 2);
 g.link(2, 3);
 g.link(3, 1);
